@@ -137,7 +137,7 @@ public class GeneticDrawingView extends FrameView {
             "Fitness",
             new XYSeriesCollection(new XYSeries("")),
             org.jfree.chart.plot.PlotOrientation.VERTICAL,
-            true,
+            false,
             false,
             false);
         chartPanel = new ChartPanel(chart);

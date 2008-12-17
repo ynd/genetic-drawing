@@ -89,7 +89,7 @@
           </Properties>
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new ChartPanel(chart)"/>
-            <AuxValue name="JavaCodeGenerator_CreateCodePre" type="java.lang.String" value="JFreeChart chart = ChartFactory.createXYLineChart( &#xa;                &quot;Fitness versus Generation&quot;, &#xa;                &quot;Generation&quot;, &#xa;                &quot;Fitness&quot;, &#xa;                new XYSeriesCollection(new XYSeries(&quot;&quot;)), &#xa;                org.jfree.chart.plot.PlotOrientation.VERTICAL, &#xa;                true, &#xa;                false, &#xa;                false);"/>
+            <AuxValue name="JavaCodeGenerator_CreateCodePre" type="java.lang.String" value="JFreeChart chart = ChartFactory.createXYLineChart( &#xa;                &quot;Fitness versus Generation&quot;, &#xa;                &quot;Generation&quot;, &#xa;                &quot;Fitness&quot;, &#xa;                new XYSeriesCollection(new XYSeries(&quot;&quot;)), &#xa;                org.jfree.chart.plot.PlotOrientation.VERTICAL, &#xa;                false, &#xa;                false, &#xa;                false);"/>
           </AuxValues>
 
           <Layout>
