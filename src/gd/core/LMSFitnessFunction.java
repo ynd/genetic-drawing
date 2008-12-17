@@ -10,7 +10,9 @@ import org.jgap.gp.GPFitnessFunction;
 import org.jgap.gp.IGPProgram;
 
 /**
- *
+ * Computes the fitness of a program as the Least-Mean-Sqare distance between 
+ * the image it generates and the target image.
+ * 
  * @author lokee
  */
 public class LMSFitnessFunction

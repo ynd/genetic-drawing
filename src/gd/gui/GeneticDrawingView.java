@@ -15,6 +15,12 @@ import javax.swing.ImageIcon;
 import javax.swing.JDialog;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
+import org.jdesktop.application.ResourceMap;
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartPanel;
+import org.jfree.chart.JFreeChart;
+import org.jfree.data.xy.XYSeries;
+import org.jfree.data.xy.XYSeriesCollection;
 
 /**
  * The application's main frame.
@@ -25,8 +31,16 @@ public class GeneticDrawingView extends FrameView {
         super(app);
 
         initComponents();
+
+        ResourceMap resourceMap = getResourceMap();
+        ImageIcon imageIcon = resourceMap.getImageIcon("targetImageLabel.icon");
+        targetImage = new BufferedImage(imageIcon.getIconWidth(),
+                imageIcon.getIconHeight(), BufferedImage.TYPE_INT_ARGB);
+        imageIcon.paintIcon(null, targetImage.getGraphics(), 0, 0);
+
         fittestDrawingView = new FittestDrawingView();
         fittestDrawingView.setVisible(false);
+        fittestDrawingView.setSize(targetImage.getWidth(), targetImage.getHeight());
     }
 
     @Action
@@ -48,7 +62,6 @@ public class GeneticDrawingView extends FrameView {
         File file = fc.getSelectedFile();
         targetImage = ImageIO.read(file);
         targetImageLabel.setIcon(scaleToImageLabel(targetImage));
-        startEvolution.setEnabled(true);
         fittestDrawingView.setSize(targetImage.getWidth(), targetImage.getHeight());
     }
 
@@ -57,13 +70,15 @@ public class GeneticDrawingView extends FrameView {
         if (targetImage == null) {
             return;
         }
-
+        ResourceMap resourceMap = getResourceMap();
         if (isEvolutionActivated == false) {
+            startEvolution.setText(resourceMap.getString("stopEvolution.text"));
             fittestDrawingView.setVisible(true);
             isEvolutionActivated = true;
             Thread t = new Thread(new EvolutionRunnable(this));
             t.start();
         } else {
+            startEvolution.setText(resourceMap.getString("startEvolution.text"));
             isEvolutionActivated = false;
         }
     }
@@ -75,10 +90,12 @@ public class GeneticDrawingView extends FrameView {
         ImageIcon scaled = new ImageIcon(image);
 
         if (scaled.getIconHeight() > targetImageLabel.getHeight()) {
-            scaled = new ImageIcon(image.getScaledInstance(-1, targetImageLabel.getHeight(), Image.SCALE_FAST));
+            scaled = new ImageIcon(image.getScaledInstance(
+                    -1, targetImageLabel.getHeight(), Image.SCALE_FAST));
         }
         if (scaled.getIconWidth() > targetImageLabel.getWidth()) {
-            scaled = new ImageIcon(image.getScaledInstance(targetImageLabel.getWidth(), -1, Image.SCALE_FAST));
+            scaled = new ImageIcon(image.getScaledInstance(
+                    targetImageLabel.getWidth(), -1, Image.SCALE_FAST));
         }
 
         return scaled;
@@ -96,6 +113,11 @@ public class GeneticDrawingView extends FrameView {
         return fittestDrawingView;
     }
 
+    public JFreeChart getChart() {
+        ChartPanel cp = (ChartPanel) chartPanel;
+        return cp.getChart();
+    }
+
     /** This method is called from within the constructor to
      * initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is
@@ -109,6 +131,16 @@ public class GeneticDrawingView extends FrameView {
         chooseImage = new javax.swing.JButton();
         startEvolution = new javax.swing.JToggleButton();
         targetImageLabel = new javax.swing.JLabel();
+        JFreeChart chart = ChartFactory.createXYLineChart(
+            "Fitness versus Generation",
+            "Generation",
+            "Fitness",
+            new XYSeriesCollection(new XYSeries("")),
+            org.jfree.chart.plot.PlotOrientation.VERTICAL,
+            true,
+            false,
+            false);
+        chartPanel = new ChartPanel(chart);
         menuBar = new javax.swing.JMenuBar();
         javax.swing.JMenu fileMenu = new javax.swing.JMenu();
         javax.swing.JMenuItem exitMenuItem = new javax.swing.JMenuItem();
@@ -125,12 +157,25 @@ public class GeneticDrawingView extends FrameView {
 
         startEvolution.setAction(actionMap.get("startEvolution")); // NOI18N
         startEvolution.setText(resourceMap.getString("startEvolution.text")); // NOI18N
-        startEvolution.setEnabled(false);
         startEvolution.setName("startEvolution"); // NOI18N
 
         targetImageLabel.setIcon(resourceMap.getIcon("targetImageLabel.icon")); // NOI18N
         targetImageLabel.setText(resourceMap.getString("targetImageLabel.text")); // NOI18N
         targetImageLabel.setName("targetImageLabel"); // NOI18N
+
+        chartPanel.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        chartPanel.setName("chartPanel"); // NOI18N
+
+        org.jdesktop.layout.GroupLayout chartPanelLayout = new org.jdesktop.layout.GroupLayout(chartPanel);
+        chartPanel.setLayout(chartPanelLayout);
+        chartPanelLayout.setHorizontalGroup(
+            chartPanelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+            .add(0, 399, Short.MAX_VALUE)
+        );
+        chartPanelLayout.setVerticalGroup(
+            chartPanelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+            .add(0, 234, Short.MAX_VALUE)
+        );
 
         org.jdesktop.layout.GroupLayout mainPanelLayout = new org.jdesktop.layout.GroupLayout(mainPanel);
         mainPanel.setLayout(mainPanelLayout);
@@ -139,24 +184,29 @@ public class GeneticDrawingView extends FrameView {
             .add(mainPanelLayout.createSequentialGroup()
                 .add(mainPanelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
                     .add(mainPanelLayout.createSequentialGroup()
-                        .addContainerGap()
+                        .add(47, 47, 47)
                         .add(chooseImage)
-                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, 93, Short.MAX_VALUE)
+                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
                         .add(startEvolution))
                     .add(mainPanelLayout.createSequentialGroup()
                         .add(108, 108, 108)
                         .add(targetImageLabel, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 172, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)))
+                .add(38, 38, 38)
+                .add(chartPanel, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
         mainPanelLayout.setVerticalGroup(
             mainPanelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(org.jdesktop.layout.GroupLayout.TRAILING, mainPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .add(targetImageLabel, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 194, Short.MAX_VALUE)
-                .add(18, 18, 18)
-                .add(mainPanelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
-                    .add(chooseImage)
-                    .add(startEvolution))
+                .add(mainPanelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.TRAILING)
+                    .add(org.jdesktop.layout.GroupLayout.LEADING, chartPanel, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .add(mainPanelLayout.createSequentialGroup()
+                        .add(targetImageLabel, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 202, Short.MAX_VALUE)
+                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                        .add(mainPanelLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
+                            .add(startEvolution)
+                            .add(chooseImage))))
                 .addContainerGap())
         );
 
@@ -187,6 +237,7 @@ public class GeneticDrawingView extends FrameView {
     }// </editor-fold>//GEN-END:initComponents
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel chartPanel;
     private javax.swing.JButton chooseImage;
     private javax.swing.JPanel mainPanel;
     private javax.swing.JMenuBar menuBar;
