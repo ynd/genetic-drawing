@@ -58,6 +58,9 @@ public class EvolutionRunnable implements Runnable {
                                 JFreeChart chart = m_view.getChart();
                                 XYSeriesCollection sc = (XYSeriesCollection) chart.getXYPlot().getDataset();
                                 XYSeries series = sc.getSeries(0);
+                                if (evno == 0) {
+                                    series.clear();
+                                }
                                 series.add(evno, best);
                             }
 
