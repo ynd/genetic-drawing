@@ -4,10 +4,11 @@
  */
 package gd.core;
 
-import java.awt.Image;
-
-import org.jgap.*;
-import org.jgap.gp.impl.*;
+import java.awt.image.BufferedImage;
+import org.jgap.InvalidConfigurationException;
+import org.jgap.gp.impl.DeltaGPFitnessEvaluator;
+import org.jgap.gp.impl.GPConfiguration;
+import org.jgap.gp.impl.TournamentSelector;
 
 /**
  * Encapsulates the settings of the genetic algorithm.
@@ -16,17 +17,23 @@ import org.jgap.gp.impl.*;
 public class DrawingGPConfiguration
         extends GPConfiguration {
 
-    protected Image target = null;
+    protected BufferedImage m_target = null;
 
-    public DrawingGPConfiguration(Image target) throws InvalidConfigurationException {
-        this.target = target;
+    public DrawingGPConfiguration(BufferedImage a_target) throws InvalidConfigurationException {
+        this.m_target = a_target;
+        this.setSelectionMethod(new TournamentSelector(3));
         this.setGPFitnessEvaluator(new DeltaGPFitnessEvaluator());
-        this.setMaxInitDepth(4);
-        this.setPopulationSize(1000);
-        this.setMaxCrossoverDepth(8);
-        //this.setFitnessFunction(new MathProblem.FormulaFitnessFunction());
-        this.setStrictProgramCreation(true);
+        this.setFitnessFunction(new LMSFitnessFunction(this));
+        this.setPopulationSize(5);
+        this.setStrictProgramCreation(false);
+        this.setCrossoverProb(0.4f);
+        this.setReproductionProb(0.6f);
+        this.setNewChromsPercent(0.3f);
+        this.setReproductionProb(1.0f / 50);
 
+        this.setMinInitDepth(50);
+        this.setMaxInitDepth(300);
+        this.setMaxCrossoverDepth(300);
     }
 
     /**
@@ -34,7 +41,7 @@ public class DrawingGPConfiguration
      *
      * @return the value of target
      */
-    public Image getTarget() {
-        return target;
+    public BufferedImage getTarget() {
+        return m_target;
     }
 }

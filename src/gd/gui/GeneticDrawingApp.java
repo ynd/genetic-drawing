@@ -1,7 +1,6 @@
 /*
  * GeneticDrawingApp.java
  */
-
 package gd.gui;
 
 import org.jdesktop.application.Application;
@@ -15,7 +14,8 @@ public class GeneticDrawingApp extends SingleFrameApplication {
     /**
      * At startup create and show the main frame of the application.
      */
-    @Override protected void startup() {
+    @Override
+    protected void startup() {
         show(new GeneticDrawingView(this));
     }
 
@@ -24,7 +24,8 @@ public class GeneticDrawingApp extends SingleFrameApplication {
      * Windows shown in our application come fully initialized from the GUI
      * builder, so this additional configuration is not needed.
      */
-    @Override protected void configureWindow(java.awt.Window root) {
+    @Override
+    protected void configureWindow(java.awt.Window root) {
     }
 
     /**
