@@ -53,12 +53,12 @@ public class EvolutionRunnable implements Runnable {
                             GPGenotype genotype = (GPGenotype) a_firedEvent.getSource();
                             int evno = genotype.getGPConfiguration().getGenerationNr();
 
-                            if (evno % 25 == 0) {
+                            if (evno % 25 == 0 || evno == 1) {
                                 double best = genotype.getFittestProgram().getFitnessValue();
                                 JFreeChart chart = m_view.getChart();
                                 XYSeriesCollection sc = (XYSeriesCollection) chart.getXYPlot().getDataset();
                                 XYSeries series = sc.getSeries(0);
-                                if (evno == 0) {
+                                if (evno == 1) {
                                     series.clear();
                                 }
                                 series.add(evno, best);
@@ -86,7 +86,7 @@ public class EvolutionRunnable implements Runnable {
 
             GPProblem problem = new DrawingProblem(conf);
             GPGenotype gp = problem.create();
-            gp.setVerboseOutput(true);
+            gp.setVerboseOutput(false);
 
             while (m_view.isEvolutionActivated()) {
                 gp.evolve();
