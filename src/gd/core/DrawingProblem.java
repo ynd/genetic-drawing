@@ -52,8 +52,8 @@ public class DrawingProblem
                 new Terminal(conf, CommandGene.FloatClass, 0.0d, 1.0d),
                 new Terminal(conf, CommandGene.IntegerClass, 0, conf.getTarget().getWidth(), true, TerminalType.WIDTH.intValue()),
                 new Terminal(conf, CommandGene.IntegerClass, 0, conf.getTarget().getHeight(), true, TerminalType.HEIGHT.intValue()),}};
-        int[] minDepth = new int[]{40};
-        int[] maxDepth = new int[]{50};
+        int[] minDepth = new int[]{5};
+        int[] maxDepth = null;
         int maxNodes = 5000;
         boolean[] fullMode = new boolean[]{false};
 

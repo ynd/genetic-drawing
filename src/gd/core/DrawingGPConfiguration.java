@@ -26,14 +26,11 @@ public class DrawingGPConfiguration
         this.setFitnessFunction(new LMSFitnessFunction(this));
         this.setPopulationSize(5);
         this.setStrictProgramCreation(false);
-        this.setCrossoverProb(0.4f);
-        this.setReproductionProb(0.6f);
-        this.setNewChromsPercent(0.3f);
-        this.setReproductionProb(1.0f / 50);
-
-        this.setMinInitDepth(50);
-        this.setMaxInitDepth(300);
-        this.setMaxCrossoverDepth(300);
+        this.setCrossoverProb(0.3f);
+        this.setReproductionProb(0.7f);
+        this.setNewChromsPercent(0.1f);
+        this.setMutationProb(0.9f);
+        this.setMaxCrossoverDepth(100);
     }
 
     /**
