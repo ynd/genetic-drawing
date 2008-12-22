@@ -42,6 +42,7 @@ public class FittestDrawingView extends javax.swing.JFrame {
         setName("Form"); // NOI18N
         setResizable(false);
 
+        mainPanel.setBackground(resourceMap.getColor("mainPanel.background")); // NOI18N
         mainPanel.setName("mainPanel"); // NOI18N
 
         org.jdesktop.layout.GroupLayout mainPanelLayout = new org.jdesktop.layout.GroupLayout(mainPanel);

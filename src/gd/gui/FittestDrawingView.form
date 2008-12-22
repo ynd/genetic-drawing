@@ -37,6 +37,7 @@
   <SubComponents>
     <Container class="javax.swing.JPanel" name="mainPanel">
       <Properties>
+        <Property name="background" type="java.awt.Color" resourceKey="mainPanel.background"/>
         <Property name="name" type="java.lang.String" value="mainPanel" noResource="true"/>
       </Properties>
 

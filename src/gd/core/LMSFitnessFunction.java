@@ -8,8 +8,8 @@ import java.awt.image.BufferedImage;
 import java.awt.image.PixelGrabber;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import org.jgap.gp.GPFitnessFunction;
-import org.jgap.gp.IGPProgram;
+import org.jgap.FitnessFunction;
+import org.jgap.IChromosome;
 
 /**
  * Computes the fitness of a program as the Least-Mean-Sqare distance between 
@@ -18,16 +18,14 @@ import org.jgap.gp.IGPProgram;
  * @author lokee
  */
 public class LMSFitnessFunction
-        extends GPFitnessFunction {
+        extends FitnessFunction {
 
-    private final DrawingGPConfiguration m_conf;
-    private final DrawingGPProgramRunner programRunner;
+    private final GAConfiguration m_conf;
     private final int[] targetPixels;
 
-    LMSFitnessFunction(DrawingGPConfiguration a_conf) {
+    LMSFitnessFunction(GAConfiguration a_conf) {
         super();
         m_conf = a_conf;
-        programRunner = new DrawingGPProgramRunner(m_conf);
 
         BufferedImage target = m_conf.getTarget();
         targetPixels = new int[target.getWidth() * target.getHeight()];
@@ -40,8 +38,9 @@ public class LMSFitnessFunction
         }
     }
 
-    protected double evaluate(final IGPProgram a_subject) {
-        BufferedImage generated = programRunner.run(a_subject);
+    @Override
+    protected double evaluate(IChromosome a_chromosome) {
+        BufferedImage generated = m_conf.getPhenotypeExpresser().express(a_chromosome);
         final int[] generatedPixels = new int[generated.getWidth() * generated.getHeight()];
         PixelGrabber pg = new PixelGrabber(generated, 0, 0, generated.getWidth(),
                 generated.getHeight(), generatedPixels, 0, generated.getWidth());

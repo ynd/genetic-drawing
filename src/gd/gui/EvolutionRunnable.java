@@ -4,23 +4,17 @@
  */
 package gd.gui;
 
-import gd.core.DrawingGPConfiguration;
-import gd.core.DrawingGPProgramRunner;
-import gd.core.DrawingProblem;
+import gd.core.GAConfiguration;
+import gd.core.GAInitialChromosomeFactory;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import org.jfree.chart.JFreeChart;
 import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
-import org.jgap.Configuration;
+import org.jgap.Genotype;
+import org.jgap.IChromosome;
 import org.jgap.InvalidConfigurationException;
-import org.jgap.event.GeneticEvent;
-import org.jgap.event.GeneticEventListener;
-import org.jgap.event.IEventManager;
-import org.jgap.gp.GPProblem;
-import org.jgap.gp.IGPProgram;
-import org.jgap.gp.impl.GPGenotype;
-import org.jgap.util.SystemKit;
+import org.jgap.Population;
 
 /**
  * Class in charge of actually running the evolution process.
@@ -28,79 +22,55 @@ import org.jgap.util.SystemKit;
  */
 public class EvolutionRunnable implements Runnable {
 
-    private GeneticDrawingView m_view = null;
+    private GAConfiguration m_conf;
+    private GeneticDrawingView m_view;
+    private Genotype m_genotype;
 
-    public EvolutionRunnable(GeneticDrawingView a_view) {
+    public EvolutionRunnable(GeneticDrawingView a_view, GAConfiguration a_conf) {
         super();
+        m_conf = a_conf;
         m_view = a_view;
+        m_genotype = null;
+    }
+
+    public EvolutionRunnable(GeneticDrawingView a_view, GAConfiguration a_conf,
+            Genotype a_genotype) {
+        super();
+        m_conf = a_conf;
+        m_view = a_view;
+        m_genotype = a_genotype;
     }
 
     public void run() {
-        Configuration.reset();
         try {
-            final DrawingGPConfiguration conf =
-                    new DrawingGPConfiguration(m_view.getTargetImage());
-
             JFreeChart chart = m_view.getChart();
             XYSeriesCollection sc = (XYSeriesCollection) chart.getXYPlot().getDataset();
             XYSeries series = sc.getSeries(0);
             series.clear();
-            IEventManager eventManager = conf.getEventManager();
-            eventManager.addEventListener(GeneticEvent.GPGENOTYPE_EVOLVED_EVENT,
-                    new GeneticEventListener() {
 
-                        /**
-                         * Updates the chart in the main view.
-                         * 
-                         */
-                        public void geneticEventFired(GeneticEvent a_firedEvent) {
-                            GPGenotype genotype = (GPGenotype) a_firedEvent.getSource();
-                            int evno = genotype.getGPConfiguration().getGenerationNr();
-
-                            if (evno % 25 == 0) {
-                                double best = genotype.getFittestProgram().getFitnessValue();
-                                JFreeChart chart = m_view.getChart();
-                                XYSeriesCollection sc = (XYSeriesCollection) chart.getXYPlot().getDataset();
-                                XYSeries series = sc.getSeries(0);
-
-                                series.add(evno, best);
-                            }
-
-                        }
-                    });
-            eventManager.addEventListener(GeneticEvent.GPGENOTYPE_NEW_BEST_SOLUTION,
-                    new GeneticEventListener() {
-
-                        private DrawingGPProgramRunner gpProgramRunner = new DrawingGPProgramRunner(conf);
-
-                        /**
-                         * Display best solution in fittestChromosomeView's mainPanel
-                         */
-                        public void geneticEventFired(GeneticEvent a_firedEvent) {
-                            GPGenotype genotype = (GPGenotype) a_firedEvent.getSource();
-                            IGPProgram best = genotype.getAllTimeBest();
-                            BufferedImage image = gpProgramRunner.run(best);
-
-                            Graphics g = m_view.getFittestDrawingView().getMainPanel().getGraphics();
-                            g.drawImage(image, 0, 0, m_view.getFittestDrawingView());
-                        }
-                    });
-
-            GPProblem problem = new DrawingProblem(conf);
-            GPGenotype gp = problem.create();
-            gp.setVerboseOutput(true);
-
-            while (m_view.isEvolutionActivated()) {
-                gp.evolve();
-                gp.calcFitness();
-
-                if (gp.getGPConfiguration().getGenerationNr() % 25 == 0) {
-                    String freeMB = SystemKit.niceMemory(SystemKit.getFreeMemoryMB());
-                    System.out.println("Evolving generation " + (gp.getGPConfiguration().getGenerationNr()) + ", memory free: " + freeMB + " MB");
+            if (m_genotype == null) {
+                int populationSize = m_conf.getPopulationSize();
+                Population pop = new Population(m_conf, populationSize);
+                for (int i = 0; i < populationSize; i++) {
+                    pop.addChromosome(GAInitialChromosomeFactory.create(m_conf));
                 }
+                m_genotype = new Genotype(m_conf, pop);
             }
 
-            problem.showTree(gp.getAllTimeBest(), "media/best.png");
+            while (m_view.isEvolutionActivated()) {
+                m_genotype.evolve();
+
+                if (m_conf.getGenerationNr() % 25 == 0) {
+                    IChromosome best = m_genotype.getFittestChromosome();
+                    series.add(m_conf.getGenerationNr(), best.getFitnessValue());
+
+                    BufferedImage image =
+                            m_conf.getPhenotypeExpresser().express(best);
+                    Graphics g = m_view.getFittestDrawingView().getMainPanel().getGraphics();
+                    g.drawImage(image, 0, 0, m_view.getFittestDrawingView());
+
+                }
+            }
         } catch (InvalidConfigurationException e) {
             e.printStackTrace();
             System.exit(-1);

@@ -3,6 +3,7 @@
  */
 package gd.gui;
 
+import gd.core.GAConfiguration;
 import java.awt.Image;
 import java.io.IOException;
 import org.jdesktop.application.Action;
@@ -21,6 +22,8 @@ import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
+import org.jgap.Configuration;
+import org.jgap.InvalidConfigurationException;
 
 /**
  * The application's main frame.
@@ -66,7 +69,7 @@ public class GeneticDrawingView extends FrameView {
     }
 
     @Action
-    public void startEvolution() {
+    public void startEvolution() throws InvalidConfigurationException {
         if (targetImage == null) {
             return;
         }
@@ -75,7 +78,10 @@ public class GeneticDrawingView extends FrameView {
             startEvolution.setText(resourceMap.getString("stopEvolution.text"));
             fittestDrawingView.setVisible(true);
             isEvolutionActivated = true;
-            Thread t = new Thread(new EvolutionRunnable(this));
+            Configuration.reset();
+            GAConfiguration conf = new GAConfiguration(targetImage,
+                    resourceMap.getInteger("maxPolygons"));
+            Thread t = new Thread(new EvolutionRunnable(this, conf));
             t.start();
         } else {
             startEvolution.setText(resourceMap.getString("startEvolution.text"));

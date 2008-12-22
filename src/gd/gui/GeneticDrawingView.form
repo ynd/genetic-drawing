@@ -59,9 +59,6 @@
             <Property name="text" type="java.lang.String" resourceKey="chooseImage.text"/>
             <Property name="name" type="java.lang.String" value="chooseImage" noResource="true"/>
           </Properties>
-          <AccessibilityProperties>
-            <Property name="AccessibleContext.accessibleName" type="java.lang.String" resourceKey="jButton1.AccessibleContext.accessibleName"/>
-          </AccessibilityProperties>
         </Component>
         <Component class="javax.swing.JToggleButton" name="startEvolution">
           <Properties>

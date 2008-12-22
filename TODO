@@ -1,0 +1,35 @@
+* Use JFreeChart to display data about convergence. This will allow me to
+compare the results when I make changes.
+
+x setStrictProgramCreation to true. This will require I add Null Terminals for
+each return type in the program.
+
+- Add new Genetic operators. First, new mutations and then new crossovers.
+
+- Investigate why I get away with no clone method in my commands.
+
+- Switch enconding of color in chromosomes to HSB
+
+- Investigate why Roger Alsing's implementation is so much faster.
+
+- Copy the parameters of the evolution from roger alsing.
+
+- The terminals are all copied from one another. This creates grey colors.
+
+- Add a timer to the graphical interface.
+
+- Add the console ouput in a tab of the GUI
+
+- Add more charts(depth vs generation, etc)
+
+- Add something to inspect population
+
+--------------------------------------------------------------------------------
+
+x Add a mutation operator that randomly disables one polygon
+
+- Add a mutation that translates one polygon
+
+- Add mutation to rotate polygon
+
+- Add mutation that swaps 2 polygons.
