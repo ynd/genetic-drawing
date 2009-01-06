@@ -1,7 +1,7 @@
 About
 =====
 
-GeneticLeonardo is a program that "evolves" drawings. The chromosomes encode the position, shape and color of 50 polygons. The fittest chromosomes are those who produce images most like a given image.
+__GeneticLeonardo is a program that "evolves" drawings__. The chromosomes encode the position, shape and color of 50 polygons. The fittest chromosomes are those who produce images most like a given image.
 
 The goal is to approximate any image with only 50 polygons.
 
@@ -26,7 +26,7 @@ Download
 
 An executable version can be downloaded from:
 
-[http://github.com/ynd/genetic-drawing/raw/master/genetic\_drawing-0.1.zip](http://github.com/ynd/genetic-drawing/raw/master/genetic\_drawing-0.1.zip)
+[http://github.com/ynd/genetic-drawing/raw/master/genetic\_drawing-0.1.zip](http://github.com/ynd/genetic-drawing/raw/master/genetic_drawing-0.1.zip)
 
 Contributing
 ============
@@ -40,7 +40,7 @@ The code is released as Open Source under the BSD license.
 
 A zip of the source code is available at:
 
-[http://github.com/ynd/genetic-drawing/raw/master/genetic\_drawing-src-0.1.zip](http://github.com/ynd/genetic-drawing/raw/master/genetic\_drawing-src-0.1.zip)
+[http://github.com/ynd/genetic-drawing/raw/master/genetic\_drawing-src-0.1.zip](http://github.com/ynd/genetic-drawing/raw/master/genetic_drawing-src-0.1.zip)
 
 A zip of an earlier version which uses Genetic Programming is available too:
 
