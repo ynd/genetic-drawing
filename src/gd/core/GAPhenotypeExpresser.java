@@ -12,7 +12,7 @@ import org.jgap.IChromosome;
 import org.jgap.impl.IntegerGene;
 
 /**
- *
+ * Class that can interpret the information encoded in the chromosomes.
  * @author lokee
  */
 public class GAPhenotypeExpresser {
