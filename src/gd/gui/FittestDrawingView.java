@@ -1,5 +1,5 @@
 /*
- * Copyright 2008 Yann Nicolas Dauphin. All Rights Reserved.
+ * Copyright 2008 Yann N. Dauphin. All Rights Reserved.
  * Distributed under the terms of the BSD License.
  */
 
@@ -11,6 +11,7 @@
 package gd.gui;
 
 /**
+ * An object of this class is responsible for displaying the fittest drawing.
  *
  * @author lokee
  */

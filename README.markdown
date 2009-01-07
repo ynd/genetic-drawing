@@ -44,7 +44,7 @@ A zip of the source code is available at:
 
 A zip of an earlier version which uses Genetic Programming is available too:
 
-[http://github.com/ynd/genetic-drawing/raw/master/genetic\_drawing-gp-src-0.1.zip](http://github.com/ynd/genetic-drawing/raw/master/genetic_drawing-gp-src-0.1.zip)
+[http://github.com/ynd/genetic-drawing/raw/gp/genetic\_drawing-gp-src-0.1.zip](http://github.com/ynd/genetic-drawing/raw/gp/genetic_drawing-gp-src-0.1.zip)
 
 Note that the GP version doesn't converge very well yet.
 
