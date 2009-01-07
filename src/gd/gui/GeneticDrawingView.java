@@ -1,5 +1,6 @@
 /*
- * GeneticDrawingView.java
+ * Copyright 2008 Yann Nicolas Dauphin. All Rights Reserved.
+ * Distributed under the terms of the BSD License.
  */
 package gd.gui;
 

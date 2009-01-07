@@ -1,6 +1,6 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+ * Copyright 2008 Yann Nicolas Dauphin. All Rights Reserved.
+ * Distributed under the terms of the BSD License.
  */
 package gd.gui;
 
