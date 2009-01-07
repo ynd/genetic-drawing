@@ -1,6 +1,6 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+ * Copyright 2008 Yann N. Dauphin. All Rights Reserved.
+ * Distributed under the terms of the BSD License.
  */
 package gd.core.commands;
 
@@ -13,7 +13,8 @@ import org.jgap.gp.impl.GPConfiguration;
 import org.jgap.gp.impl.ProgramChromosome;
 
 /**
- *
+ * GP Function that builds a java object of the class java.awt.Point.
+ * 
  * @author lokee
  */
 public class PointConstructor extends CommandGene {

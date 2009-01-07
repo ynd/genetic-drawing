@@ -1,6 +1,6 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+ * Copyright 2008 Yann N. Dauphin. All Rights Reserved.
+ * Distributed under the terms of the BSD License.
  */
 package gd.core;
 
@@ -10,7 +10,8 @@ import java.awt.image.BufferedImage;
 import org.jgap.gp.IGPProgram;
 
 /**
- *
+ * Class that can run a GP program for the DrawingProblem.
+ * 
  * @author lokee
  */
 public class DrawingGPProgramRunner {

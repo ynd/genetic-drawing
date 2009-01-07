@@ -1,6 +1,6 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+ * Copyright 2008 Yann N. Dauphin. All Rights Reserved.
+ * Distributed under the terms of the BSD License.
  */
 
 /*
@@ -11,7 +11,8 @@
 package gd.gui;
 
 /**
- *
+ * An object of this class is used to display the fittest drawing.
+ * 
  * @author lokee
  */
 public class FittestDrawingView extends javax.swing.JFrame {

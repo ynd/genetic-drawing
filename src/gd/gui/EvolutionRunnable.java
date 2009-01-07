@@ -1,6 +1,6 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+ * Copyright 2008 Yann N. Dauphin. All Rights Reserved.
+ * Distributed under the terms of the BSD License.
  */
 package gd.gui;
 
@@ -24,6 +24,7 @@ import org.jgap.util.SystemKit;
 
 /**
  * Class in charge of actually running the evolution process.
+ * 
  * @author lokee
  */
 public class EvolutionRunnable implements Runnable {
